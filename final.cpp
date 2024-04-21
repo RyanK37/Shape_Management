@@ -35,8 +35,8 @@ class Coordinates {                                                         // C
     }
 
     void scale(int factor, bool sign){                                      // To scale the coordinate
-        if (factor == 0 && !sign) {
-            cout << "Cannot divide by zero.!!!";
+        if (factor == 0 || !sign) {
+            cout << "Error!Cannot divide by zero or there is no sign!!!";
         } else {
             if (sign) {
                 x *= factor;
@@ -62,7 +62,7 @@ class Shape {                                                               // S
     int sides;
 
     public:
-    Shape(int noOfSides, Coordinates &coord) : position(coord), sides(noOfSides) {}     // Constructor for shape class
+    Shape(int noOfSides, Coordinates& coord) : position(coord), sides(noOfSides) {}     // Constructor for shape class
 
     Coordinates getCoordinates() {                                          // get coordinates of the object; 
         return position;
@@ -72,7 +72,7 @@ class Shape {                                                               // S
         return sides;
     }
 
-    void setCoordinates(Coordinates &newcoord) {                            // To set the new coordinates
+    void setCoordinates(Coordinates& newcoord) {                            // To set the new coordinates
         position = newcoord;
     }
 
@@ -118,7 +118,7 @@ class Rectangle : public Shape {                                            // R
     }
 
     string display() override {                                            // To display the informations of the rectangle (override the function from shape class)
-        string disPlay =  "The name of the shape : Circle\n";
+        string disPlay =  "The name of the shape : Rectangle\n";
         disPlay += "The attributes(position, width, length) >> Position : " + position.display() + ", Width : " +  to_string(width) + ", Length : " + to_string(length) +"\n";
         disPlay += "The area : " + to_string(getArea()) +"\n";
         disPlay += "The perimeter : " + to_string(getPerimeter()) + "\n";
