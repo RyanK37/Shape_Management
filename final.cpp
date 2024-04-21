@@ -276,10 +276,6 @@ class ShapeList {
     }
 
     double area(int pos) {
-        if (pos<1 || pos > listofShapes.size()) {
-            cout << "Error!! There is no shape in that position!!";
-            return -1.0;
-        } 
         return (*listofShapes[pos-1]).getArea();
     }
 
@@ -290,10 +286,6 @@ class ShapeList {
     }
 
     double perimeter(int pos) {
-        if (pos<1 || pos > listofShapes.size()) {
-            cout << "Error!! There is no shape in that position!!";
-            return -1.0;
-        } 
         return (*listofShapes[pos-1]).getPerimeter();
     }
 
@@ -311,7 +303,7 @@ class ShapeList {
     string displayByPosition(int pos) {
         return (*listofShapes[pos-1]).display();
     }
-
+    
     int size() {
         return listofShapes.size();
     }
@@ -420,6 +412,7 @@ class ShapeManagment {
                         shape_list.addShape(trg); 
                         break;
                     }
+                    // --------------------------------------------------------------------------------
                     else {
                         cout << "Error!! Please input valid shape!!";
                     }
@@ -453,7 +446,7 @@ class ShapeManagment {
                 int position;
                 cout << "Please provide the position of the shape : ";
                 cin >> position;
-                if (position < 1 || position > shape_list.size()) {
+                if ( position < 1 || position > shape_list.size()) {
                     cout << "Error!! There is no shape in that position!!";
                 } else {
                     double area = shape_list.area(position);
@@ -519,3 +512,6 @@ int main() {
     ShapeManagment program;
     program.optionMenu();
 }
+
+// ==================================================================================== //
+// ==================================================================================== //
