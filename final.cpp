@@ -4,37 +4,37 @@
 #include <vector>
 using namespace std;
 
-class Coordinates {
-    private:
+class Coordinates {                                                         // Coordinates class
+    private:                                                                // Attributes
     int x;
     int y;
 
     public:
-    Coordinates (int x1, int y1) {
+    Coordinates (int x1, int y1) {                                          // Constructor for Coordinates
         x = x1;
         y = y1;
     }
 
-    int getX() {
+    int getX() {                                                            // To get the x value of the coordinte
         return x;
     }
 
-    int getY() {
+    int getY() {                                                            // To get the y value of the coordinate
         return y;
     }
 
-    double distance(Coordinates &p) {
+    double distance(Coordinates& p) {                                       // Distance between two coordinates
         int distX = x - p.getX();
         int distY = y - p.getY();
         return sqrt(distX*distX + distY*distY);
     }
 
-    void translate(int dx, int dy) {
+    void translate(int dx, int dy) {                                        // To translate the coordinate
         x += dx;
         y += dy;
     }
 
-    void scale(int factor, bool sign){
+    void scale(int factor, bool sign){                                      // To scale the coordinate
         if (factor == 0 && !sign) {
             cout << "Cannot divide by zero.!!!";
         } else {
@@ -48,7 +48,7 @@ class Coordinates {
         }
     }
 
-    string display() {
+    string display() {                                                      // To display the current coordinate position
         return "X = " + to_string(x) + ", Y = " + to_string(y); 
     }
 };  
@@ -56,58 +56,58 @@ class Coordinates {
 // ==================================================================================== //
 // ==================================================================================== //
 
-class Shape {
-    protected:
+class Shape {                                                               // Shape Class
+    protected:                                                              // attributes
     Coordinates position;
     int sides;
 
     public:
-    Shape(int noOfSides, Coordinates &coord) : position(coord), sides(noOfSides) {}
+    Shape(int noOfSides, Coordinates &coord) : position(coord), sides(noOfSides) {}     // Constructor for shape class
 
-    Coordinates getCoordinates() {
+    Coordinates getCoordinates() {                                          // get coordinates of the object; 
         return position;
     }
 
-    int getSides() {
+    int getSides() {                                                        // To get the side of the shape
         return sides;
     }
 
-    void setCoordinates(Coordinates &newcoord) {
+    void setCoordinates(Coordinates &newcoord) {                            // To set the new coordinates
         position = newcoord;
     }
 
-    virtual void translate(int dx, int dy) {
+    virtual void translate(int dx, int dy) {                                // To translate the shape
         position.translate(dx, dy);
     }
 
-    virtual void scale(int factor, bool sign) {} 
+    virtual void scale(int factor, bool sign) {}                            // pure virtual function to scale
 
-    virtual double getArea() = 0;
+    virtual double getArea() = 0;                                           // pure virtual function to get area
 
-    virtual double getPerimeter() = 0;
+    virtual double getPerimeter() = 0;                                      // pure virtual function to get perimeter
 
-    virtual string display() = 0;
+    virtual string display() = 0;                                           // pure virtual function to display
 };
 
 // ==================================================================================== //
 // ==================================================================================== //
 
-class Rectangle : public Shape {
+class Rectangle : public Shape {                                            // Rectangle class inherients from Shape class
     private:
-    int width, length;
+    int width, length;                                                      // attributes
 
     public:
-    Rectangle(Coordinates &coord, int w, int l) : Shape(4, coord), width(w), length(l) {}
+    Rectangle(Coordinates &coord, int w, int l) : Shape(4, coord), width(w), length(l) {}      // Constructor for Rectangle class
 
-    double getArea() override {
+    double getArea() override {                                             // To get the area of the rectangle (override the function from shape class)
         return round(width * length * 100)/100.0;
     }
 
-    double getPerimeter() override {
+    double getPerimeter() override {                                        // To get the perimeter of the rectangle (override the function from shape class)
         return round( 2 * (width + length) * 100)/100.0;
     }
 
-    void scale(int factor, bool sign) override {
+    void scale(int factor, bool sign) override {                            // To scale the rectangle (override the function from shape class)
         if (sign) {
             width *= factor;
             length *= factor;
@@ -117,7 +117,7 @@ class Rectangle : public Shape {
         }
     }
 
-    string display() override {
+    string display() override {                                            // To display the informations of the rectangle (override the function from shape class)
         string disPlay =  "The name of the shape : Circle\n";
         disPlay += "The attributes(position, width, length) >> Position : " + position.display() + ", Width : " +  to_string(width) + ", Length : " + to_string(length) +"\n";
         disPlay += "The area : " + to_string(getArea()) +"\n";
@@ -129,22 +129,22 @@ class Rectangle : public Shape {
 // ==================================================================================== //
 // ==================================================================================== //
 
-class Square : public Shape {
-    private:
+class Square : public Shape {                                               // Square class inherients from Shape class
+    private:                                                                // attributes
     int side;
 
-    public:
-    Square(Coordinates &coord, int s) : Shape(4, coord), side(s) {}
+    public:                                                                 
+    Square(Coordinates &coord, int s) : Shape(4, coord), side(s) {}         // Constructor for the Square class
 
-    double getArea() override {
+    double getArea() override {                                             // To get the area of the Square (override the function from shape class)
         return round(side * side * 100)/100.0;
     }
 
-    double getPerimeter() override {
+    double getPerimeter() override {                                        // To get the perimeter of the Square (override the function from shape class)
         return round(4 * side * 100)/100.0;
     }
 
-    void scale(int factor, bool sign) override {
+    void scale(int factor, bool sign) override {                            // To scale the Square (override the function from shape class)
         if (sign) {
             side *= factor;
         } else {
@@ -152,7 +152,7 @@ class Square : public Shape {
         }
     }
 
-    string display() override {
+    string display() override {                                             // To display the functions of the Square (override the function from shape class)
         string disPlay =  "The name of the shape : Square\n";
         disPlay += "The attributes(position and side) >> Position : " + position.display() + ", Side : " +  to_string(side) + "\n";
         disPlay += "The area : " + to_string(getArea()) +"\n";
@@ -164,23 +164,23 @@ class Square : public Shape {
 // ==================================================================================== //
 // ==================================================================================== //
 
-class Circle : public Shape {
-    private:
+class Circle : public Shape {                                               // Circle class inherients from Shape class
+    private:                                                                // attributes    
     double radius;
-    const double pi = 3.14159265358979323846; 
+    const double pi = 3.14159265358979323846;                               // declare constant for pi value
 
     public:
-    Circle(Coordinates &coord, double r) : Shape(0, coord), radius(r) {}
+    Circle(Coordinates &coord, double r) : Shape(0, coord), radius(r) {}    // Constructor for Circle class
 
-    double getArea() override {
+    double getArea() override {                                             // To get the area of the circle
         return round(pi * radius * radius * 100)/100.0 ;
     }
     
-    double getPerimeter() override {
+    double getPerimeter() override {                                        // To get the perimeter of the circle
         return round(2 * pi * radius * 100)/100.0;
     }
 
-    void scale(int factor, bool sign) override {
+    void scale(int factor, bool sign) override {                            // To scale the circle
         if (sign) {
             radius *= factor;
         } else {
@@ -188,7 +188,7 @@ class Circle : public Shape {
         }
     }
 
-    string display() override {
+    string display() override {                                            // To display the informations of the circle
         string disPlay =  "The name of the shape : Circle\n";
         disPlay += "The attributes(position and radius) >> Position : " + position.display() + ", Radius : " +  to_string(radius) + "\n";
         disPlay += "The area : " + to_string(getArea()) +"\n";
@@ -200,27 +200,27 @@ class Circle : public Shape {
 // ==================================================================================== //
 // ==================================================================================== //
 
-class Triangle : public Shape {
-    private:
-    Coordinates vertex1, vertex2, vertex3;
+class Triangle : public Shape {                                             // Triangle class inherients from Shape class
+    private:                                                                // attributes
+    Coordinates vertex1, vertex2, vertex3;                                  // initialize three objects(vertices) from Coordinates class
 
     public:
-    Triangle(Coordinates &v1, Coordinates &v2, Coordinates &v3) : Shape(3, v1), vertex1(v1), vertex2(v2), vertex3(v3) {}
+    Triangle(Coordinates &v1, Coordinates &v2, Coordinates &v3) : Shape(3, v1), vertex1(v1), vertex2(v2), vertex3(v3) {}   // Constructor for the Triangle class
 
-    double getPerimeter() override {
+    double getPerimeter() override {                                        // To get the perimeter of the triangle
         double a = vertex1.distance(vertex2);
         double b = vertex2.distance(vertex3);
         double c = vertex3.distance(vertex1);
         return (round((a + b + c) * 100))/100.0;
     }
 
-    void translate(int dx, int dy) override {
+    void translate(int dx, int dy) override {                               // To translate the triangle
         vertex1.translate(dx, dy);
         vertex2.translate(dx, dy);
         vertex3.translate(dx, dy);
     }
 
-    double getArea() override {
+    double getArea() override {                                             // To get the area of the triangle
         double a = vertex1.distance(vertex2);
         double b = vertex2.distance(vertex3);
         double c = vertex3.distance(vertex1);
@@ -228,13 +228,13 @@ class Triangle : public Shape {
         return (round(sqrt(s * (s-a) * (s-b) * (s-c)) * 100))/100.0;
     }
 
-    void scale(int factor, bool sign) override {
+    void scale(int factor, bool sign) override {                            // To scale the triangle
         vertex1.scale(factor, sign);
         vertex2.scale(factor, sign);
         vertex3.scale(factor, sign);
     }
 
-    string display() override {
+    string display() override {                                             // To display the informations of the triangle
         string disPlay =  "The name of the shape : Triangle\n";
         disPlay += "The attributes(three vertices) : " + vertex1.display() + ", " + vertex2.display() + ", " + vertex3.display() +"\n";
         disPlay += "The area : " + to_string(getArea()) +"\n";
@@ -246,46 +246,46 @@ class Triangle : public Shape {
 // ==================================================================================== //
 // ==================================================================================== //
 
-class ShapeList {
+class ShapeList {                                                           // ShapeList Class to handle the storage of all Shapes
     private:
-    vector<Shape*>listofShapes;
+    vector<Shape*>listofShapes;                                             // Initialize a vector variable "listofShapes" which will store objects of Shape class
 
     public:
-    void addShape(Shape* s) {
+    void addShape(Shape* s) {                                               // To add  new shape to the vector
         listofShapes.push_back(s);
     }
 
-    void translateShapes(int dx, int dy) {
+    void translateShapes(int dx, int dy) {                                  // To translate all shapes of the vector
         for (auto& each : listofShapes) {
             (*each).translate(dx, dy);
         }
     }
     
-    Shape* getShape(int pos) {
+    Shape* getShape(int pos) {                                              // To get the shape by position
         return listofShapes[pos-1];
     }
 
-    Shape* removeShape(int pos) {
+    Shape* removeShape(int pos) {                                           // To remove the shape by position
         Shape* removed_shape = listofShapes[pos-1];
         listofShapes.erase(listofShapes.begin() + (pos - 1));
         return removed_shape;
     }
 
-    double area(int pos) {
+    double area(int pos) {                                                  // To get the area of the shape by position
         return (*listofShapes[pos-1]).getArea();
     }
 
-    void scale(int factor, bool sign) {
+    void scale(int factor, bool sign) {                                     // To scale all shapes of the vector
         for (auto& each : listofShapes) {
             (*each).scale(factor, sign);
         }
     }
 
-    double perimeter(int pos) {
+    double perimeter(int pos) {                                             // To get the perimeter of the shape by position
         return (*listofShapes[pos-1]).getPerimeter();
     }
 
-    string display() {
+    string display() {                                                      // To display informations of all shapes of the vector
         string dis_play;
         int counter  = 1;
         for (auto& each : listofShapes) {
@@ -296,11 +296,7 @@ class ShapeList {
         return dis_play;
     }
 
-    // string displayByPosition(int pos) {
-    //     return (*listofShapes[pos-1]).display();
-    // }
-    
-    int size() {
+    int size() {                                                            // To get the size of the vector
         return listofShapes.size();
     }
 };
@@ -308,12 +304,12 @@ class ShapeList {
 // ==================================================================================== //
 // ==================================================================================== //
 
-class ShapeManagment {
+class ShapeManagment {                                                      // ShapeManagement class to handle ShapeList class
     private:
-    ShapeList shape_list;
+    ShapeList shape_list;                                                   // initialize an object as "shape_list" from ShapeList class
 
     public:
-    bool wanna_continue(){                                     //to ask the user whether he/she wants to contiue the program or not
+    bool wanna_continue(){                                                  // To ask the user whether he/she wants to contiue the program or not
         while (true){
             string option1;
             cout << "\nDo you want to continue program?(Type Yes or No)  >> ";
@@ -331,7 +327,9 @@ class ShapeManagment {
         }
     }
 
-    void optionMenu() {
+    // ==================================================================================== //
+
+    void optionMenu() {                                                     // The option menu method to ask the user 
         int option;
         while (true) {
             cout << "\nOption menu!\n";
@@ -343,20 +341,20 @@ class ShapeManagment {
             cout << "6. Translate all the shapes\n";
             cout << "7. Scale all the shapes\n";
             cout << "0. Quit program\n";
-            cout << "Please provide your option >> ";
+            cout << "Please provide your option(0 to 7) >> ";
             cin >> option;
             cout << "\n";
 
-            if (option == 1) {
+            if (option == 1) {                                              // Add the shape according to the user input    
                 string shape;
                 int x, y;
                 cout << "Please choose shape(Rectangle, Square, Circle, Triangle) : ";
                 cin >> shape;
                 while (true) {
-                    if (shape == "Rectangle") {
+                    if (shape == "Rectangle") {                             // Adding a rectangle shape
                         int width, length;
                         
-                        cout << "Please input rectangle position!\n";
+                        cout << "Please input rectangle position!\n";       // Asking for user inputs
                         cout << "X - coordinate : ";
                         cin >> x ;
                         cout << "Y - coordinate : ";
@@ -366,31 +364,33 @@ class ShapeManagment {
                         cout << "Please input the length(l) : ";
                         cin >> length;
 
-                        Coordinates coord(x, y);
+                        Coordinates coord(x, y);                            
                         Shape* rect = new Rectangle(coord, width, length);
                         shape_list.addShape(rect);
                         break;
                     } 
                     // --------------------------------------------------------------------------------
-                    else if (shape == "Square") {
+                    else if (shape == "Square") {                          // Adding a square shape
                         int side;   
-                        cout << "Please input square position!\n";
+
+                        cout << "Please input square position!\n";         // Asking user inputs
                         cout << "X - coordinate : ";
                         cin >> x ;
                         cout << "Y - coordinate : ";
                         cin >> y;
                         cout << "Please input the side(s) : ";
                         cin >>  side;   
+
                         Coordinates coord(x, y);
                         Shape* sqr = new Square(coord, side);
                         shape_list.addShape(sqr);
                         break;
                     }
                     // --------------------------------------------------------------------------------
-                    else if (shape == "Circle") {
-                        double radius;
+                    else if (shape == "Circle") {                           // Adding a circle shape
+                        double radius;  
 
-                        cout << "Please provide the circle position!\n";
+                        cout << "Please provide the circle position!\n";    // Asking the user inputs
                         cout << "X - coordinate : ";
                         cin >> x;
                         cout << "Y - coordinate : ";
@@ -404,10 +404,10 @@ class ShapeManagment {
                         break;
                     }
                     // --------------------------------------------------------------------------------
-                    else if (shape == "Triangle") {
+                    else if (shape == "Triangle") {                         // Adding a triangle shape
                         int x1, y1, x2, y2, x3, y3;
 
-                        cout << "Please provide first vertex : ";
+                        cout << "Please provide first vertex : ";           // Asking user inputs
                         cout << "First vertex X : ";
                         cin  >> x1;
                         cout << "First vertex Y : ";
@@ -434,95 +434,97 @@ class ShapeManagment {
                         cout << "Error!! Please input valid shape!!";
                     }
                 }
-                cout << "The shape is added successfully!\n";
+                cout << "The shape is added successfully!\n";               // Tell the user that the shape is added 
 
-                if (!wanna_continue()){                                    //Ask the user whether want to continue the game or not?
+                if (!wanna_continue()){                                     //Ask the user whether want to continue the progarm or not?
                     break;
                 }
             }
             // ==================================================================================== 
-            else if (option == 2) {
+            else if (option == 2) {                                         // Remove the shape according to the position that the user input
                 int position;
                 cout << "Please provide the position of the shape : ";
                 cin >> position;
-                if (position < 1 || position > shape_list.size()) {
+                if (position < 1 || position > shape_list.size()) {         // Check whether it is out of index or not
                     cout << "Error!! There is no shape in that position!!";
                 } else {
-                    Shape* removed_shape = shape_list.removeShape(position);
+                    Shape* removed_shape = shape_list.removeShape(position);// Remove the shape
                     cout << "The shape is removed successfully!!"; 
                 }
 
-                if (!wanna_continue()){                                    //Ask the user whether want to continue the game or not?
+                if (!wanna_continue()){                                     //Ask the user whether want to continue the program or not?
                     break;
                 }
             }
             // ==================================================================================== 
-            else if (option == 3) {
+            else if (option == 3) {                                         // To get the information of the shape by position
                 int position;
                 cout << "Please provide the position of the shape : ";
                 cin >> position;
-                if (position < 1 || position > shape_list.size()) {
+                if (position < 1 || position > shape_list.size()) {         // Check whether it is out of index or not     
                     cout << "Error!! There is no shape in that position!!";
                 } else {
-                    Shape* shape_position = shape_list.getShape(position);
+                    Shape* shape_position = shape_list.getShape(position);  // Display the informations of the shape
                     cout << (*shape_position).display();
                 }
 
-                if (!wanna_continue()){                                    //Ask the user whether want to continue the game or not?
+                if (!wanna_continue()){                                     //Ask the user whether want to continue the program or not?
                     break;
                 }
             }
             // ==================================================================================== 
-            else if (option == 4) {
+            else if (option == 4) {                                         // To display the area and the perimeter of the shape by position
                 int position;
                 cout << "Please provide the position of the shape : ";
                 cin >> position;
-                if ( position < 1 || position > shape_list.size()) {
+                if ( position < 1 || position > shape_list.size()) {        // Check whether it is out of index or not
                     cout << "Error!! There is no shape in that position!!";
                 } else {
-                    double area = shape_list.area(position);
-                    double perimeter = shape_list.perimeter(position);
-                    cout << "The area of the shape : " + to_string(area) + "\n";
-                    cout << "The perimeter of the shape : " + to_string(perimeter) + "\n";
+                    double area = shape_list.area(position);                // get area
+                    double perimeter = shape_list.perimeter(position);      // get perimeter
+                    cout << "The area of the shape : " + to_string(area) + "\n";            // show the result to the user
+                    cout << "The perimeter of the shape : " + to_string(perimeter) + "\n";  // show the result to the user 
                 }
 
-                if (!wanna_continue()){                                    //Ask the user whether want to continue the game or not?
+                if (!wanna_continue()){                                     //Ask the user whether want to continue the program or not?
                     break;
                 }
             }
             // ==================================================================================== 
-            else if (option == 5) {
-                cout << shape_list.display();
+            else if (option == 5) {                                         // Display all shapes' informations
+                cout << shape_list.display();                               
 
-                if (!wanna_continue()){                                    //Ask the user whether want to continue the game or not?
+                if (!wanna_continue()){                                     //Ask the user whether want to continue the program or not?
                     break;
                 }
             }
             // ==================================================================================== 
-            else if (option == 6) {
+            else if (option == 6) {                                         // To translate all shapes
                 int dx, dy;
 
-                cout << "Please provide the translate values for X and Y!!\n";
+                cout << "Please provide the translate values for X and Y!!\n";  // ask the user for translate values
                 cout << "Translate value for X : ";
                 cin  >> dx;
                 cout << "Translate value for Y : ";
                 cin  >> dy;
 
-                shape_list.translateShapes(dx, dy);
+                shape_list.translateShapes(dx, dy);                         // translate all shapes
+                cout << "All shapes are translated successfully!!"
 
-                if (!wanna_continue()){                                    //Ask the user whether want to continue the game or not?
+                if (!wanna_continue()){                                     //Ask the user whether want to continue the program or not?
                     break;
                 }
             }
             // ==================================================================================== 
-            else if (option == 7) {
+            else if (option == 7) {                                         // To scale all shapes
                 int factor;
                 string input_bool;
                 bool sign;
-                cout << "Please provide the factor for the scale : ";
+
+                cout << "Please provide the factor for the scale : ";       // ask the factor value
                 cin  >> factor;
                 while (true) {
-                    cout << "Please provide the sign for the scale(True or Falase) : ";
+                    cout << "Please provide the sign for the scale(True or Falase) : "; // To get the sign (true or false)
                     cin  >> input_bool;
                     if (input_bool == "True") {
                         sign = true;
@@ -535,17 +537,20 @@ class ShapeManagment {
                     }
                 }
 
-                if (!wanna_continue()){                                    //Ask the user whether want to continue the game or not?
+                shape_list.scale(factor, sign);                             // Scale all shapes
+                cout << "All shapes are scaled successfully!!"
+
+                if (!wanna_continue()){                                     //Ask the user whether want to continue the program or not?
                     break;
                 }
             }
             // ==================================================================================== 
-            else if (option == 0) {
+            else if (option == 0) {                                         // Exit the program
                 cout << "Thank you for using our program!\nProgram exit successfully!!";
                 break;
             }
             // ==================================================================================== 
-            else {
+            else {                                                          // To handle the invalid input
                 cout << "Invalid option!!\nPlease provide a valid option!!\n"<< endl;
             }  
         }
@@ -556,8 +561,8 @@ class ShapeManagment {
 // ==================================================================================== //
 
 int main() {
-    ShapeManagment program;
-    program.optionMenu();
+    ShapeManagment program;                                                 // create an object "program" for ShapeManagment class
+    program.optionMenu();                                                   // Run the program
 }
 
 // ==================================================================================== //
