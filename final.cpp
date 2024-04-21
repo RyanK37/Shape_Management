@@ -100,11 +100,11 @@ class Rectangle : public Shape {
     Rectangle(Coordinates &coord, int w, int l) : Shape(4, coord), width(w), length(l) {}
 
     double getArea() override {
-        return width * length;
+        return round(width * length * 100)/100.0;
     }
 
     double getPerimeter() override {
-        return 2 * (width + length);
+        return round( 2 * (width + length) * 100)/100.0;
     }
 
     void scale(int factor, bool sign) override {
@@ -137,11 +137,11 @@ class Square : public Shape {
     Square(Coordinates &coord, int s) : Shape(4, coord), side(s) {}
 
     double getArea() override {
-        return side * side;
+        return round(side * side * 100)/100.0;
     }
 
     double getPerimeter() override {
-        return 4 * side;
+        return round(4 * side * 100)/100.0;
     }
 
     void scale(int factor, bool sign) override {
@@ -173,11 +173,11 @@ class Circle : public Shape {
     Circle(Coordinates &coord, double r) : Shape(0, coord), radius(r) {}
 
     double getArea() override {
-        return pi * radius * radius;
+        return round(pi * radius * radius * 100)/100.0 ;
     }
     
     double getPerimeter() override {
-        return 2 * pi * radius;
+        return round(2 * pi * radius * 100)/100.0;
     }
 
     void scale(int factor, bool sign) override {
@@ -211,7 +211,7 @@ class Triangle : public Shape {
         double a = vertex1.distance(vertex2);
         double b = vertex2.distance(vertex3);
         double c = vertex3.distance(vertex1);
-        return a + b + c;
+        return (round((a + b + c) * 100))/100.0;
     }
 
     void translate(int dx, int dy) override {
@@ -225,7 +225,7 @@ class Triangle : public Shape {
         double b = vertex2.distance(vertex3);
         double c = vertex3.distance(vertex1);
         double s = (a + b+ c)/2;
-        return sqrt(s*(s-a)*(s-b)*(s-c));
+        return (round(sqrt(s * (s-a) * (s-b) * (s-c)) * 100))/100.0;
     }
 
     void scale(int factor, bool sign) override {
@@ -262,10 +262,6 @@ class ShapeList {
     }
     
     Shape* getShape(int pos) {
-        if (pos<1 || pos > listofShapes.size()) {
-            cout << "Error!! There is no shape in that position!!";
-            return nullptr;
-        }
         return listofShapes[pos-1];
     }
 
@@ -300,9 +296,9 @@ class ShapeList {
         return dis_play;
     }
 
-    string displayByPosition(int pos) {
-        return (*listofShapes[pos-1]).display();
-    }
+    // string displayByPosition(int pos) {
+    //     return (*listofShapes[pos-1]).display();
+    // }
     
     int size() {
         return listofShapes.size();
@@ -317,10 +313,28 @@ class ShapeManagment {
     ShapeList shape_list;
 
     public:
+    bool wanna_continue(){                                     //to ask the user whether he/she wants to contiue the program or not
+        while (true){
+            string option1;
+            cout << "\nDo you want to continue program?(Type Yes or No)  >> ";
+            cin  >> option1;
+            if (option1 == "No" || option1 == "no") {
+                cout << "\nThank you for using our program!\nProgram exit successfully!!";
+                return false;
+            }
+            else if (option1 == "Yes" || option1 == "yes" || option1 == "YEs" || option1 == "YeS" || option1 == "yeS" || option1 == "yEs") {
+                return true;
+            }
+            else {
+                cout << "\nInvalid input!!\nPlease type Yes or No!!\n";
+            }
+        }
+    }
+
     void optionMenu() {
         int option;
         while (true) {
-            cout << "Option menu!\n";
+            cout << "\nOption menu!\n";
             cout << "1. Add a shape\n";
             cout << "2. Remove a shape by position\n";
             cout << "3. Get information about a shape by position\n";
@@ -331,6 +345,7 @@ class ShapeManagment {
             cout << "0. Quit program\n";
             cout << "Please provide your option >> ";
             cin >> option;
+            cout << "\n";
 
             if (option == 1) {
                 string shape;
@@ -375,8 +390,10 @@ class ShapeManagment {
                     else if (shape == "Circle") {
                         double radius;
 
-                        cout << "Please provide the circle position : ";
+                        cout << "Please provide the circle position!\n";
+                        cout << "X - coordinate : ";
                         cin >> x;
+                        cout << "Y - coordinate : ";
                         cin >> y;
                         cout << "Please provide the radius : ";
                         cin >> radius;
@@ -417,6 +434,11 @@ class ShapeManagment {
                         cout << "Error!! Please input valid shape!!";
                     }
                 }
+                cout << "The shape is added successfully!\n";
+
+                if (!wanna_continue()){                                    //Ask the user whether want to continue the game or not?
+                    break;
+                }
             }
             // ==================================================================================== 
             else if (option == 2) {
@@ -426,8 +448,12 @@ class ShapeManagment {
                 if (position < 1 || position > shape_list.size()) {
                     cout << "Error!! There is no shape in that position!!";
                 } else {
-                    Shape* remove_shape = shape_list.getShape(position);
+                    Shape* removed_shape = shape_list.removeShape(position);
                     cout << "The shape is removed successfully!!"; 
+                }
+
+                if (!wanna_continue()){                                    //Ask the user whether want to continue the game or not?
+                    break;
                 }
             }
             // ==================================================================================== 
@@ -438,7 +464,12 @@ class ShapeManagment {
                 if (position < 1 || position > shape_list.size()) {
                     cout << "Error!! There is no shape in that position!!";
                 } else {
-                    cout << shape_list.displayByPosition(position); 
+                    Shape* shape_position = shape_list.getShape(position);
+                    cout << (*shape_position).display();
+                }
+
+                if (!wanna_continue()){                                    //Ask the user whether want to continue the game or not?
+                    break;
                 }
             }
             // ==================================================================================== 
@@ -454,10 +485,18 @@ class ShapeManagment {
                     cout << "The area of the shape : " + to_string(area) + "\n";
                     cout << "The perimeter of the shape : " + to_string(perimeter) + "\n";
                 }
+
+                if (!wanna_continue()){                                    //Ask the user whether want to continue the game or not?
+                    break;
+                }
             }
             // ==================================================================================== 
             else if (option == 5) {
                 cout << shape_list.display();
+
+                if (!wanna_continue()){                                    //Ask the user whether want to continue the game or not?
+                    break;
+                }
             }
             // ==================================================================================== 
             else if (option == 6) {
@@ -470,6 +509,10 @@ class ShapeManagment {
                 cin  >> dy;
 
                 shape_list.translateShapes(dx, dy);
+
+                if (!wanna_continue()){                                    //Ask the user whether want to continue the game or not?
+                    break;
+                }
             }
             // ==================================================================================== 
             else if (option == 7) {
@@ -491,10 +534,14 @@ class ShapeManagment {
                         cout << "Invalid Input!! Please provide valid input(True or False)!!\n";
                     }
                 }
+
+                if (!wanna_continue()){                                    //Ask the user whether want to continue the game or not?
+                    break;
+                }
             }
             // ==================================================================================== 
             else if (option == 0) {
-                cout << "Program exit successfully!!";
+                cout << "Thank you for using our program!\nProgram exit successfully!!";
                 break;
             }
             // ==================================================================================== 
