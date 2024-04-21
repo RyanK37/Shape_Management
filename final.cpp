@@ -94,10 +94,10 @@ class Shape {                                                               // S
 
 class Rectangle : public Shape {                                            // Rectangle class inherients from Shape class
     private:
-    int width, length;                                                      // attributes
+    double width, length;                                                      // attributes
 
     public:
-    Rectangle(Coordinates &coord, int w, int l) : Shape(4, coord), width(w), length(l) {}      // Constructor for Rectangle class
+    Rectangle(Coordinates &coord, double w, double l) : Shape(4, coord), width(w), length(l) {}      // Constructor for Rectangle class
 
     double getArea() override {                                             // To get the area of the rectangle (override the function from shape class)
         return round(width * length * 100)/100.0;
@@ -131,10 +131,10 @@ class Rectangle : public Shape {                                            // R
 
 class Square : public Shape {                                               // Square class inherients from Shape class
     private:                                                                // attributes
-    int side;
+    double side;
 
     public:                                                                 
-    Square(Coordinates &coord, int s) : Shape(4, coord), side(s) {}         // Constructor for the Square class
+    Square(Coordinates &coord, double s) : Shape(4, coord), side(s) {}         // Constructor for the Square class
 
     double getArea() override {                                             // To get the area of the Square (override the function from shape class)
         return round(side * side * 100)/100.0;
@@ -509,7 +509,7 @@ class ShapeManagment {                                                      // S
                 cin  >> dy;
 
                 shape_list.translateShapes(dx, dy);                         // translate all shapes
-                cout << "All shapes are translated successfully!!"
+                cout << "All shapes are translated successfully!!";
 
                 if (!wanna_continue()){                                     //Ask the user whether want to continue the program or not?
                     break;
@@ -538,7 +538,7 @@ class ShapeManagment {                                                      // S
                 }
 
                 shape_list.scale(factor, sign);                             // Scale all shapes
-                cout << "All shapes are scaled successfully!!"
+                cout << "All shapes are scaled successfully!!";
 
                 if (!wanna_continue()){                                     //Ask the user whether want to continue the program or not?
                     break;
