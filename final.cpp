@@ -303,15 +303,20 @@ class ShapeList {
 
     string display() {
         string dis_play;
-        int count  = 1;
+        int counter  = 1;
         for (auto& each : listofShapes) {
-            dis_play += "The positon of the shape : " + to_string(cout) + "\n";
+            dis_play += "The positon of the shape : " + to_string(counter) + "\n";
             dis_play += (*each).display();
-            count ++;
+            counter++;
         }
         return dis_play;
     }
 };
+
+// ==================================================================================== //
+// ==================================================================================== //
+
+
 
 // ==================================================================================== //
 // ==================================================================================== //
