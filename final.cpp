@@ -270,10 +270,6 @@ class ShapeList {
     }
 
     Shape* removeShape(int pos) {
-        if (pos<1 || pos > listofShapes.size()) {
-            cout << "Error!! There is no shape in that position!!";
-            return nullptr;
-        } 
         Shape* removed_shape = listofShapes[pos-1];
         listofShapes.erase(listofShapes.begin() + (pos - 1));
         return removed_shape;
@@ -311,6 +307,14 @@ class ShapeList {
         }
         return dis_play;
     }
+
+    string displayByPosition(int pos) {
+        return (*listofShapes[pos-1]).display();
+    }
+
+    int size() {
+        return listofShapes.size();
+    }
 };
 
 // ==================================================================================== //
@@ -335,88 +339,172 @@ class ShapeManagment {
             cout << "0. Quit program\n";
             cout << "Please provide your option >> ";
             cin >> option;
+
             if (option == 1) {
                 string shape;
                 int x, y;
                 cout << "Please choose shape(Rectangle, Square, Circle, Triangle) : ";
                 cin >> shape;
-                if (shape == "Rectangle") {
-                    int width, length;
-                    
-                    cout << "Please input rectangle position!\n";
-                    cout << "X - coordinate : ";
-                    cin >> x ;
-                    cout << "Y - coordinate : ";
-                    cin >> y;
-                    cout << "Please input the width(w) : ";
-                    cin >>  width;
-                    cout << "Please input the length(l) : ";
-                    cin >> length;
+                while (true) {
+                    if (shape == "Rectangle") {
+                        int width, length;
+                        
+                        cout << "Please input rectangle position!\n";
+                        cout << "X - coordinate : ";
+                        cin >> x ;
+                        cout << "Y - coordinate : ";
+                        cin >> y;
+                        cout << "Please input the width(w) : ";
+                        cin >>  width;
+                        cout << "Please input the length(l) : ";
+                        cin >> length;
 
-                    Coordinates coord(x, y);
-                    Shape* rect = new Rectangle(coord, width, length);
-                    shape_list.addShape(rect);
-                } 
-                else if (shape == "Square") {
-                    int side;   
-                    cout << "Please input square position!\n";
-                    cout << "X - coordinate : ";
-                    cin >> x ;
-                    cout << "Y - coordinate : ";
-                    cin >> y;
-                    cout << "Please input the side(s) : ";
-                    cin >>  side;   
-                    Coordinates coord(x, y);
-                    Shape* sqr = new Square(coord, side);
-                    shape_list.addShape(sqr);
-                }
-                else if (shape == "Circle") {
-                    double radius;
+                        Coordinates coord(x, y);
+                        Shape* rect = new Rectangle(coord, width, length);
+                        shape_list.addShape(rect);
+                        break;
+                    } 
+                    // --------------------------------------------------------------------------------
+                    else if (shape == "Square") {
+                        int side;   
+                        cout << "Please input square position!\n";
+                        cout << "X - coordinate : ";
+                        cin >> x ;
+                        cout << "Y - coordinate : ";
+                        cin >> y;
+                        cout << "Please input the side(s) : ";
+                        cin >>  side;   
+                        Coordinates coord(x, y);
+                        Shape* sqr = new Square(coord, side);
+                        shape_list.addShape(sqr);
+                        break;
+                    }
+                    // --------------------------------------------------------------------------------
+                    else if (shape == "Circle") {
+                        double radius;
 
-                    cout << "Please provide the circle position : ";
-                    cin >> x;
-                    cin >> y;
-                    cout << "Please provide the radius : ";
-                    cin >> radius;
+                        cout << "Please provide the circle position : ";
+                        cin >> x;
+                        cin >> y;
+                        cout << "Please provide the radius : ";
+                        cin >> radius;
 
-                    Coordinates coord(x, y);
-                    Shape* Circle = new Circle(coord, radius);
-                    shape_list.addShape(Circle);
-                }
-                else if (shape == "Triangle") {
-                    int x1, y1, x2, y2, x3, y3;
+                        Coordinates coord(x, y);
+                        Shape* crl = new Circle(coord, radius);
+                        shape_list.addShape(crl);
+                        break;
+                    }
+                    // --------------------------------------------------------------------------------
+                    else if (shape == "Triangle") {
+                        int x1, y1, x2, y2, x3, y3;
 
-                    cout << "Please provide first vertex : ";
-                    cout << "First vertex X : ";
-                    cin  >> x1;
-                    cout << "First vertex Y : ";
-                    cin  >> y1;
-                    cout << "Second vertex X : ";
-                    cin  >> x2;
-                    cout << "Second vertex Y : ";
-                    cin  >> y2;
-                    cout << "Third vertex X : ";
-                    cin  >> x3;
-                    cout << "Third vertex Y : ";
-                    cin  >> y3; 
+                        cout << "Please provide first vertex : ";
+                        cout << "First vertex X : ";
+                        cin  >> x1;
+                        cout << "First vertex Y : ";
+                        cin  >> y1;
+                        cout << "Second vertex X : ";
+                        cin  >> x2;
+                        cout << "Second vertex Y : ";
+                        cin  >> y2;
+                        cout << "Third vertex X : ";
+                        cin  >> x3;
+                        cout << "Third vertex Y : ";
+                        cin  >> y3; 
 
-                    Coordinates vertex1(x1, y1);
-                    Coordinates vertex2(x2, y2);
-                    Coordinates vertex3(x3, y3);
+                        Coordinates vertex1(x1, y1);
+                        Coordinates vertex2(x2, y2);
+                        Coordinates vertex3(x3, y3);
 
-                    Shape* trg = new Triangle(vertex1, vertex2, vertex3);
-                    shape_list.addShape(trg); 
+                        Shape* trg = new Triangle(vertex1, vertex2, vertex3);
+                        shape_list.addShape(trg); 
+                        break;
+                    }
+                    else {
+                        cout << "Error!! Please input valid shape!!";
+                    }
                 }
             }
-            // else if (option == 2)
+            // ==================================================================================== 
+            else if (option == 2) {
+                int position;
+                cout << "Please provide the position of the shape : ";
+                cin >> position;
+                if (position < 1 || position > shape_list.size()) {
+                    cout << "Error!! There is no shape in that position!!";
+                } else {
+                    Shape* remove_shape = shape_list.getShape(position);
+                    cout << "The shape is removed successfully!!"; 
+                }
+            }
+            // ==================================================================================== 
+            else if (option == 3) {
+                int position;
+                cout << "Please provide the position of the shape : ";
+                cin >> position;
+                if (position < 1 || position > shape_list.size()) {
+                    cout << "Error!! There is no shape in that position!!";
+                } else {
+                    cout << shape_list.displayByPosition(position); 
+                }
+            }
+            // ==================================================================================== 
+            else if (option == 4) {
+                int position;
+                cout << "Please provide the position of the shape : ";
+                cin >> position;
+                if (position < 1 || position > shape_list.size()) {
+                    cout << "Error!! There is no shape in that position!!";
+                } else {
+                    double area = shape_list.area(position);
+                    double perimeter = shape_list.perimeter(position);
+                    cout << "The area of the shape : " + to_string(area) + "\n";
+                    cout << "The perimeter of the shape : " + to_string(perimeter) + "\n";
+                }
+            }
+            // ==================================================================================== 
             else if (option == 5) {
                 cout << shape_list.display();
             }
+            // ==================================================================================== 
+            else if (option == 6) {
+                int dx, dy;
 
+                cout << "Please provide the translate values for X and Y!!\n";
+                cout << "Translate value for X : ";
+                cin  >> dx;
+                cout << "Translate value for Y : ";
+                cin  >> dy;
+
+                shape_list.translateShapes(dx, dy);
+            }
+            // ==================================================================================== 
+            else if (option == 7) {
+                int factor;
+                string input_bool;
+                bool sign;
+                cout << "Please provide the factor for the scale : ";
+                cin  >> factor;
+                while (true) {
+                    cout << "Please provide the sign for the scale(True or Falase) : ";
+                    cin  >> input_bool;
+                    if (input_bool == "True") {
+                        sign = true;
+                        break;
+                    } else if (input_bool == "False") {
+                        sign = false;
+                        break;
+                    } else {
+                        cout << "Invalid Input!! Please provide valid input(True or False)!!\n";
+                    }
+                }
+            }
+            // ==================================================================================== 
             else if (option == 0) {
                 cout << "Program exit successfully!!";
                 break;
             }
+            // ==================================================================================== 
             else {
                 cout << "Invalid option!!\nPlease provide a valid option!!\n"<< endl;
             }  
@@ -427,9 +515,7 @@ class ShapeManagment {
 // ==================================================================================== //
 // ==================================================================================== //
 
-int main(){
-    ShapeManagment test;
-    test.optionMenu();
+int main() {
+    ShapeManagment program;
+    program.optionMenu();
 }
-
-
