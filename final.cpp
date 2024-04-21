@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <cmath>
+#include <vector>
 using namespace std;
 
 class Coordinates {
@@ -120,7 +121,7 @@ class Rectangle : public Shape {
         string disPlay =  "The name of the shape : Circle\n";
         disPlay += "The attributes(position, width, length) >> Position : " + position.display() + ", Width : " +  to_string(width) + ", Length : " + to_string(length) +"\n";
         disPlay += "The area : " + to_string(getArea()) +"\n";
-        disPlay += "The perimeter : " + to_string(getPerimeter()); 
+        disPlay += "The perimeter : " + to_string(getPerimeter()) + "\n";
         return disPlay;
     }
 };
@@ -155,7 +156,7 @@ class Square : public Shape {
         string disPlay =  "The name of the shape : Square\n";
         disPlay += "The attributes(position and side) >> Position : " + position.display() + ", Side : " +  to_string(side) + "\n";
         disPlay += "The area : " + to_string(getArea()) +"\n";
-        disPlay += "The perimeter : " + to_string(getPerimeter()); 
+        disPlay += "The perimeter : " + to_string(getPerimeter()) + "\n";
         return disPlay;
     }
 };
@@ -191,7 +192,7 @@ class Circle : public Shape {
         string disPlay =  "The name of the shape : Circle\n";
         disPlay += "The attributes(position and radius) >> Position : " + position.display() + ", Radius : " +  to_string(radius) + "\n";
         disPlay += "The area : " + to_string(getArea()) +"\n";
-        disPlay += "The perimeter : " + to_string(getPerimeter()); 
+        disPlay += "The perimeter : " + to_string(getPerimeter())+ "\n";
         return disPlay;
     }
 };
@@ -237,8 +238,78 @@ class Triangle : public Shape {
         string disPlay =  "The name of the shape : Triangle\n";
         disPlay += "The attributes(three vertices) : " + vertex1.display() + ", " + vertex2.display() + ", " + vertex3.display() +"\n";
         disPlay += "The area : " + to_string(getArea()) +"\n";
-        disPlay += "The perimeter : " + to_string(getPerimeter()); 
+        disPlay += "The perimeter : " + to_string(getPerimeter()) + "\n";
         return disPlay;
+    }
+};
+
+// ==================================================================================== //
+// ==================================================================================== //
+
+class ShapeList {
+    private:
+    vector<Shape*>listofShapes;
+
+    public:
+    void addShpae(Shape* s) {
+        listofShapes.push_back(s);
+    }
+
+    void translateShapes(int dx, int dy) {
+        for (auto& each : listofShapes) {
+            (*each).translate(dx, dy);
+        }
+    }
+    
+    Shape* getShape(int pos) {
+        if (pos<1 || pos > listofShapes.size()) {
+            cout << "Error!! There is no shape in that position!!";
+            return nullptr;
+        }
+        return listofShapes[pos-1];
+    }
+
+    Shape* removeShape(int pos) {
+        if (pos<1 || pos > listofShapes.size()) {
+            cout << "Error!! There is no shape in that position!!";
+            return nullptr;
+        } 
+        Shape* removed_shape = listofShapes[pos-1];
+        listofShapes.erase(listofShapes.begin() + (pos - 1));
+        return removed_shape;
+    }
+
+    double area(int pos) {
+        if (pos<1 || pos > listofShapes.size()) {
+            cout << "Error!! There is no shape in that position!!";
+            return -1.0;
+        } 
+        return (*listofShapes[pos-1]).getArea();
+    }
+
+    void scale(int factor, bool sign) {
+        for (auto& each : listofShapes) {
+            (*each).scale(factor, sign);
+        }
+    }
+
+    double perimeter(int pos) {
+        if (pos<1 || pos > listofShapes.size()) {
+            cout << "Error!! There is no shape in that position!!";
+            return -1.0;
+        } 
+        return (*listofShapes[pos-1]).getPerimeter();
+    }
+
+    string display() {
+        string dis_play;
+        int count  = 1;
+        for (auto& each : listofShapes) {
+            dis_play += "The positon of the shape : " + to_string(cout) + "\n";
+            dis_play += (*each).display();
+            count ++;
+        }
+        return dis_play;
     }
 };
 
