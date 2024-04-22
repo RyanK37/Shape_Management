@@ -351,7 +351,7 @@ class ShapeManagment {                                                      // S
                 cout << "Please choose shape(Rectangle, Square, Circle, Triangle) : ";
                 cin >> shape;
                 while (true) {
-                    if (shape == "Rectangle" || shape == "rectangle") {                             // Adding a rectangle shape
+                    if (shape == "Rectangle" || shape == "rectangle") {     // Adding a rectangle shape
                         int width, length;
                         
                         cout << "Please input rectangle position!\n";       // Asking for user inputs
@@ -367,10 +367,11 @@ class ShapeManagment {                                                      // S
                         Coordinates coord(x, y);                            
                         Shape* rect = new Rectangle(coord, width, length);
                         shape_list.addShape(rect);
+                        cout << "The shape is added successfully!\n";       // Tell the user that the shape is added 
                         break;
                     } 
                     // --------------------------------------------------------------------------------
-                    else if (shape == "Square" || shape == "square") {                          // Adding a square shape
+                    else if (shape == "Square" || shape == "square") {     // Adding a square shape
                         int side;   
 
                         cout << "Please input square position!\n";         // Asking user inputs
@@ -384,10 +385,11 @@ class ShapeManagment {                                                      // S
                         Coordinates coord(x, y);
                         Shape* sqr = new Square(coord, side);
                         shape_list.addShape(sqr);
+                        cout << "The shape is added successfully!\n";       // Tell the user that the shape is added 
                         break;
                     }
                     // --------------------------------------------------------------------------------
-                    else if (shape == "Circle" || shape == "circle") {                           // Adding a circle shape
+                    else if (shape == "Circle" || shape == "circle") {      // Adding a circle shape
                         double radius;  
 
                         cout << "Please provide the circle position!\n";    // Asking the user inputs
@@ -401,10 +403,11 @@ class ShapeManagment {                                                      // S
                         Coordinates coord(x, y);
                         Shape* crl = new Circle(coord, radius);
                         shape_list.addShape(crl);
+                        cout << "The shape is added successfully!\n";       // Tell the user that the shape is added 
                         break;
                     }
                     // --------------------------------------------------------------------------------
-                    else if (shape == "Triangle" || shape == "triangle") {                         // Adding a triangle shape
+                    else if (shape == "Triangle" || shape == "triangle") {  // Adding a triangle shape
                         int x1, y1, x2, y2, x3, y3;
 
                         cout << "Please provide first vertex!!\n";           // Asking user inputs
@@ -427,14 +430,15 @@ class ShapeManagment {                                                      // S
 
                         Shape* trg = new Triangle(vertex1, vertex2, vertex3);
                         shape_list.addShape(trg); 
+                        cout << "The shape is added successfully!\n";      // Tell the user that the shape is added 
                         break;
                     }
                     // --------------------------------------------------------------------------------
                     else {
                         cout << "Error!! Please input valid shape!!";
+                        break;
                     }
                 }
-                cout << "The shape is added successfully!\n";               // Tell the user that the shape is added 
 
                 if (!wanna_continue()){                                     //Ask the user whether want to continue the progarm or not?
                     break;
@@ -524,12 +528,12 @@ class ShapeManagment {                                                      // S
                 cout << "Please provide the factor for the scale : ";       // ask the factor value
                 cin  >> factor;
                 while (true) {
-                    cout << "Please provide the sign for the scale(True or Falase) : "; // To get the sign (true or false)
+                    cout << "Please provide the sign for the scale(True or False) : "; // To get the sign (true or false)
                     cin  >> input_bool;
-                    if (input_bool == "True") {
+                    if (input_bool == "True" || input_bool == "true") {
                         sign = true;
                         break;
-                    } else if (input_bool == "False") {
+                    } else if (input_bool == "False" || input_bool == "false") {
                         sign = false;
                         break;
                     } else {
