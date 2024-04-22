@@ -100,11 +100,11 @@ class Rectangle : public Shape {                                            // R
     Rectangle(Coordinates &coord, double w, double l) : Shape(4, coord), width(w), length(l) {}      // Constructor for Rectangle class
 
     double getArea() override {                                             // To get the area of the rectangle (override the function from shape class)
-        return round(width * length * 100)/100.0;
+        return width * length;
     }
 
     double getPerimeter() override {                                        // To get the perimeter of the rectangle (override the function from shape class)
-        return round( 2 * (width + length) * 100)/100.0;
+        return 2 * (width + length);
     }
 
     void scale(int factor, bool sign) override {                            // To scale the rectangle (override the function from shape class)
@@ -120,8 +120,8 @@ class Rectangle : public Shape {                                            // R
     string display() override {                                            // To display the informations of the rectangle (override the function from shape class)
         string disPlay =  "The name of the shape : Rectangle\n";
         disPlay += "The attributes(position, width, length) >> Position : " + position.display() + ", Width : " +  to_string(width) + ", Length : " + to_string(length) +"\n";
-        disPlay += "The area : " + to_string(getArea()) +"\n";
-        disPlay += "The perimeter : " + to_string(getPerimeter()) + "\n";
+        disPlay += "The area : " + to_string(round(getArea()*100)/100.0) +"\n";
+        disPlay += "The perimeter : " + to_string(round(getPerimeter()*100)/100.0)+ "\n";
         return disPlay;
     }
 };
@@ -137,11 +137,11 @@ class Square : public Shape {                                               // S
     Square(Coordinates &coord, double s) : Shape(4, coord), side(s) {}         // Constructor for the Square class
 
     double getArea() override {                                             // To get the area of the Square (override the function from shape class)
-        return round(side * side * 100)/100.0;
+        return side * side;
     }
 
     double getPerimeter() override {                                        // To get the perimeter of the Square (override the function from shape class)
-        return round(4 * side * 100)/100.0;
+        return 4 * side;
     }
 
     void scale(int factor, bool sign) override {                            // To scale the Square (override the function from shape class)
@@ -155,8 +155,8 @@ class Square : public Shape {                                               // S
     string display() override {                                             // To display the functions of the Square (override the function from shape class)
         string disPlay =  "The name of the shape : Square\n";
         disPlay += "The attributes(position and side) >> Position : " + position.display() + ", Side : " +  to_string(side) + "\n";
-        disPlay += "The area : " + to_string(getArea()) +"\n";
-        disPlay += "The perimeter : " + to_string(getPerimeter()) + "\n";
+        disPlay += "The area : " + to_string(round(getArea()*100)/100.0) +"\n";
+        disPlay += "The perimeter : " + to_string(round(getPerimeter()*100)/100.0) + "\n";
         return disPlay;
     }
 };
@@ -173,11 +173,11 @@ class Circle : public Shape {                                               // C
     Circle(Coordinates &coord, double r) : Shape(0, coord), radius(r) {}    // Constructor for Circle class
 
     double getArea() override {                                             // To get the area of the circle
-        return round(pi * radius * radius * 100)/100.0 ;
+        return pi * radius * radius;
     }
     
     double getPerimeter() override {                                        // To get the perimeter of the circle
-        return round(2 * pi * radius * 100)/100.0;
+        return 2 * pi * radius;
     }
 
     void scale(int factor, bool sign) override {                            // To scale the circle
@@ -191,8 +191,8 @@ class Circle : public Shape {                                               // C
     string display() override {                                            // To display the informations of the circle
         string disPlay =  "The name of the shape : Circle\n";
         disPlay += "The attributes(position and radius) >> Position : " + position.display() + ", Radius : " +  to_string(radius) + "\n";
-        disPlay += "The area : " + to_string(getArea()) +"\n";
-        disPlay += "The perimeter : " + to_string(getPerimeter())+ "\n";
+        disPlay += "The area : " + to_string(round(getArea()*100)/100.0) +"\n";
+        disPlay += "The perimeter : " + to_string(round(getPerimeter()*100)/100.0)+ "\n";
         return disPlay;
     }
 };
@@ -211,7 +211,7 @@ class Triangle : public Shape {                                             // T
         double a = vertex1.distance(vertex2);
         double b = vertex2.distance(vertex3);
         double c = vertex3.distance(vertex1);
-        return (round((a + b + c) * 100))/100.0;
+        return (a + b + c);
     }
 
     void translate(int dx, int dy) override {                               // To translate the triangle
@@ -225,7 +225,7 @@ class Triangle : public Shape {                                             // T
         double b = vertex2.distance(vertex3);
         double c = vertex3.distance(vertex1);
         double s = (a + b+ c)/2;
-        return (round(sqrt(s * (s-a) * (s-b) * (s-c)) * 100))/100.0;
+        return sqrt(s * (s-a) * (s-b) * (s-c));
     }
 
     void scale(int factor, bool sign) override {                            // To scale the triangle
@@ -237,8 +237,8 @@ class Triangle : public Shape {                                             // T
     string display() override {                                             // To display the informations of the triangle
         string disPlay =  "The name of the shape : Triangle\n";
         disPlay += "The attributes(three vertices) : " + vertex1.display() + ", " + vertex2.display() + ", " + vertex3.display() +"\n";
-        disPlay += "The area : " + to_string(getArea()) +"\n";
-        disPlay += "The perimeter : " + to_string(getPerimeter()) + "\n";
+        disPlay += "The area : " + to_string(round(getArea()*100)/100.0) +"\n";
+        disPlay += "The perimeter : " + to_string(round(getPerimeter()*100)/100.0) + "\n";
         return disPlay;
     }
 };
@@ -351,7 +351,7 @@ class ShapeManagment {                                                      // S
                 cout << "Please choose shape(Rectangle, Square, Circle, Triangle) : ";
                 cin >> shape;
                 while (true) {
-                    if (shape == "Rectangle") {                             // Adding a rectangle shape
+                    if (shape == "Rectangle" || shape == "rectangle") {                             // Adding a rectangle shape
                         int width, length;
                         
                         cout << "Please input rectangle position!\n";       // Asking for user inputs
@@ -370,7 +370,7 @@ class ShapeManagment {                                                      // S
                         break;
                     } 
                     // --------------------------------------------------------------------------------
-                    else if (shape == "Square") {                          // Adding a square shape
+                    else if (shape == "Square" || shape == "square") {                          // Adding a square shape
                         int side;   
 
                         cout << "Please input square position!\n";         // Asking user inputs
@@ -387,7 +387,7 @@ class ShapeManagment {                                                      // S
                         break;
                     }
                     // --------------------------------------------------------------------------------
-                    else if (shape == "Circle") {                           // Adding a circle shape
+                    else if (shape == "Circle" || shape == "circle") {                           // Adding a circle shape
                         double radius;  
 
                         cout << "Please provide the circle position!\n";    // Asking the user inputs
@@ -404,10 +404,10 @@ class ShapeManagment {                                                      // S
                         break;
                     }
                     // --------------------------------------------------------------------------------
-                    else if (shape == "Triangle") {                         // Adding a triangle shape
+                    else if (shape == "Triangle" || shape == "triangle") {                         // Adding a triangle shape
                         int x1, y1, x2, y2, x3, y3;
 
-                        cout << "Please provide first vertex : ";           // Asking user inputs
+                        cout << "Please provide first vertex!!\n";           // Asking user inputs
                         cout << "First vertex X : ";
                         cin  >> x1;
                         cout << "First vertex Y : ";
@@ -480,8 +480,8 @@ class ShapeManagment {                                                      // S
                 if ( position < 1 || position > shape_list.size()) {        // Check whether it is out of index or not
                     cout << "Error!! There is no shape in that position!!";
                 } else {
-                    double area = shape_list.area(position);                // get area
-                    double perimeter = shape_list.perimeter(position);      // get perimeter
+                    double area = round(shape_list.area(position) *100)/100.0;                // get area
+                    double perimeter = round(shape_list.perimeter(position)) * 100/100.0;      // get perimeter
                     cout << "The area of the shape : " + to_string(area) + "\n";            // show the result to the user
                     cout << "The perimeter of the shape : " + to_string(perimeter) + "\n";  // show the result to the user 
                 }
